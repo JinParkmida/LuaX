@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BookOpen, Menu, X, CheckCircle, Clock, Target, Users, Download, Code } from 'lucide-react';
+import { BookOpen, Menu, X, CheckCircle, Target, Download } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import ChapterContent from './components/ChapterContent';
 import ProgressTracker from './components/ProgressTracker';
@@ -105,6 +105,7 @@ function App() {
               <ChapterContent
                 chapter={chapters[validCurrentChapter]}
                 chapterIndex={validCurrentChapter}
+                totalChapters={chapters.length}
                 progress={currentProgress}
                 onProgressUpdate={updateProgress}
                 onNext={() => validCurrentChapter < chapters.length - 1 && setCurrentChapter(validCurrentChapter + 1)}
