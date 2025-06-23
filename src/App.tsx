@@ -11,7 +11,17 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [progress, setProgress] = useState<ChapterProgress[]>(() => {
     const saved = localStorage.getItem('lua-curriculum-progress');
-    return saved ? JSON.parse(saved) : chapters.map(() => ({ completed: false, score: 0 }));
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length === chapters.length) {
+          return parsed;
+        }
+      } catch {
+        // ignore parse errors and fall back to default
+      }
+    }
+    return chapters.map(() => ({ completed: false, score: 0 }));
   });
 
   useEffect(() => {
