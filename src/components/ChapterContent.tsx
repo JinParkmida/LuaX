@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Clock, Target, CheckCircle, ArrowLeft, ArrowRight, Code, Play, Download } from 'lucide-react';
 import CodeBlock from './CodeBlock';
 import Quiz from './Quiz';
@@ -148,7 +150,21 @@ const ChapterContent: React.FC<ChapterContentProps> = ({
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">{currentSection.title}</h2>
           <div className="prose prose-lg max-w-none">
-            <p className="text-gray-700 leading-relaxed">{currentSection.content}</p>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                code({inline, className, children, ...props}) {
+                  const match = /language-(\w+)/.exec(className || '');
+                  return !inline && match ? (
+                    <CodeBlock code={String(children).trim()} language={match[1]} />
+                  ) : (
+                    <code className={className} {...props}>{children}</code>
+                  );
+                }
+              }}
+            >
+              {currentSection.content}
+            </ReactMarkdown>
           </div>
         </div>
 
