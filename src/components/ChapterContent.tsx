@@ -7,6 +7,7 @@ import { Chapter, ChapterProgress } from '../types';
 interface ChapterContentProps {
   chapter: Chapter;
   chapterIndex: number;
+  totalChapters: number;
   progress: ChapterProgress;
   onProgressUpdate: (chapterIndex: number, completed: boolean, score?: number) => void;
   onNext: () => void;
@@ -16,6 +17,7 @@ interface ChapterContentProps {
 const ChapterContent: React.FC<ChapterContentProps> = ({
   chapter,
   chapterIndex,
+  totalChapters,
   progress,
   onProgressUpdate,
   onNext,
@@ -254,7 +256,7 @@ const ChapterContent: React.FC<ChapterContentProps> = ({
 
         <button
           onClick={onNext}
-          disabled={chapterIndex === 9} // Last chapter
+          disabled={chapterIndex === totalChapters - 1}
           className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <span>Next</span>
